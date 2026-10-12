@@ -1,0 +1,52 @@
+# ── Environment & secrets ────────────────────────────────────────────────────
+.env
+.env.*
+!.env.example
+
+# ── Dependencies ─────────────────────────────────────────────────────────────
+node_modules/
+
+# ── TypeScript build output ───────────────────────────────────────────────────
+dist/
+build/
+out/
+*.js.map
+*.d.ts.map
+
+# ── Wrangler / Cloudflare Workers ────────────────────────────────────────────
+.wrangler/
+.dev.vars
+worker-configuration.d.ts
+
+# ── Drizzle ORM ──────────────────────────────────────────────────────────────
+# Generated migration snapshots are committed; local SQLite files are not.
+*.db
+*.sqlite
+*.sqlite3
+*.sqlite-shm
+*.sqlite-wal
+
+# ── Vitest / Test artefacts ───────────────────────────────────────────────────
+coverage/
+.vitest-cache/
+
+# ── OS generated files ────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── Editor / IDE directories ──────────────────────────────────────────────────
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea/
+*.suo
+*.user
+
+# ── Logs ─────────────────────────────────────────────────────────────────────
+logs/
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*

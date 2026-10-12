@@ -1,0 +1,59 @@
+# VirtualVegas — casino virtual de Telegram sobre Cloudflare.
+#
+# Antes del primer despliegue hay que crear las bases D1 y pegar su id real:
+#   npx wrangler d1 create virtualvegas-dev
+#   npx wrangler d1 create virtualvegas
+#   npx wrangler d1 migrations apply virtualvegas-dev --local
+#   npx wrangler d1 migrations apply virtualvegas-dev --remote
+#
+# Los secretos NO van aquí, se suben con `wrangler secret put` (ver README).
+
+name = "virtualvegas-dev"
+main = "src/index.ts"
+compatibility_date = "2025-06-01"
+workers_dev = true
+
+[observability]
+enabled = true
+
+# --- Durable Objects: uno por chat_id, con almacenamiento SQLite (requisito
+# --- del plan gratuito de Workers). ---
+[durable_objects]
+bindings = [{ name = "ROOMS", class_name = "RoomDO" }]
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["RoomDO"]
+
+# --- D1: datos globales (usuarios, ledger, pagos). ---
+[[d1_databases]]
+binding = "DB"
+database_name = "virtualvegas-dev"
+database_id = "00000000-0000-0000-0000-000000000000"
+migrations_dir = "src/db/migrations"
+
+[vars]
+ENVIRONMENT = "dev"
+
+# =====================================================================
+# Producción: `wrangler deploy --env production`
+# =====================================================================
+[env.production]
+name = "virtualvegas"
+workers_dev = true
+
+[env.production.vars]
+ENVIRONMENT = "production"
+
+[env.production.durable_objects]
+bindings = [{ name = "ROOMS", class_name = "RoomDO" }]
+
+[[env.production.migrations]]
+tag = "v1"
+new_sqlite_classes = ["RoomDO"]
+
+[[env.production.d1_databases]]
+binding = "DB"
+database_name = "virtualvegas"
+database_id = "00000000-0000-0000-0000-000000000000"
+migrations_dir = "src/db/migrations"

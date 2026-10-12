@@ -1,0 +1,40 @@
+{
+  "name": "virtualvegas",
+  "version": "0.1.0",
+  "description": "Micro casino virtual para Telegram sobre Cloudflare Workers, Durable Objects y D1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "deploy:prod": "wrangler deploy --env production",
+    "typecheck": "wrangler types && tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "cf-typegen": "wrangler types",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate:local": "wrangler d1 migrations apply virtualvegas-dev --local",
+    "db:migrate:remote": "wrangler d1 migrations apply virtualvegas-dev --remote"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luisfrm/virtualvegas.git"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/luisfrm/virtualvegas/issues"
+  },
+  "homepage": "https://github.com/luisfrm/virtualvegas#readme",
+  "dependencies": {
+    "drizzle-orm": "^0.45.4",
+    "grammy": "^1.46.0",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@cloudflare/vitest-plugin": "^1.4.0",
+    "drizzle-kit": "^0.31.11",
+    "typescript": "^7.0.2",
+    "vitest": "^4.1.11",
+    "wrangler": "^4.149.0"
+  }
+}
